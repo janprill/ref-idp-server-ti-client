@@ -68,6 +68,12 @@
     </dependency>
 
     <dependency>
+      <groupId>jakarta.xml.soap</groupId>
+      <artifactId>jakarta.xml.soap-api</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+
+    <dependency>
       <groupId>de.gematik.idp</groupId>
       <artifactId>idp-commons</artifactId>
       <version>${project.version}</version>

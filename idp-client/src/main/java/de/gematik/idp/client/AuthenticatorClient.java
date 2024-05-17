@@ -107,15 +107,17 @@ public class AuthenticatorClient {
         "brainpoolP256r1", keyObject.getString("x"), keyObject.getString("y"));
   }
 
+  // A_24944-01 - Anfrage des "AUTHORIZATION_CODE" für ein "ID_TOKEN"
   public AuthorizationResponse doAuthorizationRequest(
       final AuthorizationRequest authorizationRequest,
       final UnaryOperator<GetRequest> beforeCallback,
       final Consumer<HttpResponse<AuthenticationChallenge>> afterCallback) {
     final String scope = String.join(" ", authorizationRequest.getScopes());
 
+    // Hier wird der Request vorbereitet
     final GetRequest request =
         Unirest.get(authorizationRequest.getLink())
-            .queryString(CLIENT_ID.getJoseName(), authorizationRequest.getClientId())
+            .queryString(CLIENT_ID.getJoseName(), authorizationRequest.getClientId()) // ID des Aktensystems
             .queryString(RESPONSE_TYPE.getJoseName(), "code")
             .queryString(REDIRECT_URI.getJoseName(), authorizationRequest.getRedirectUri())
             .queryString(STATE.getJoseName(), authorizationRequest.getState())
@@ -127,6 +129,7 @@ public class AuthenticatorClient {
             .header(HttpHeaders.USER_AGENT, USER_AGENT)
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 
+    // A_20662 - Annahme des "user_consent" und des "CHALLENGE_TOKEN"
     final HttpResponse<AuthenticationChallenge> authorizationResponse =
         beforeCallback.apply(request).asObject(AuthenticationChallenge.class);
     afterCallback.accept(authorizationResponse);

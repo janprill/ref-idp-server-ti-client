@@ -52,6 +52,9 @@ public class JsonWebToken extends IdpJoseObject {
     super(rawString);
   }
 
+  /**
+   * A_20663-01 - Prüfung der Signatur des CHALLENGE_TOKEN
+   */
   public void verify(final PublicKey publicKey) {
     final JwtConsumer jwtConsumer =
         new JwtConsumerBuilder()

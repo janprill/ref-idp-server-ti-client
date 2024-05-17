@@ -27,6 +27,7 @@ public class AuthorizationRequest {
 
   private final String link;
   private final String clientId;
+  private final String responseType;
   private final String codeChallenge;
   private final CodeChallengeMethod codeChallengeMethod;
   private final String redirectUri;
